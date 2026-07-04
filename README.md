@@ -49,34 +49,53 @@ Database audit snapshot proving transaction log compliance, exact relational tra
 
 ### 1. Initialize the Database Schema
 Execute the following statements inside your MySQL instance to construct the database schema and plant mock data:
-```sql
+
+sql:
+
 CREATE DATABASE swift_bank;
+
 USE swift_bank;
 
 CREATE TABLE accounts (
+
     account_id INT PRIMARY KEY,
+    
     owner_name VARCHAR(50),
+    
     balance DECIMAL(15, 2) NOT NULL CHECK (balance >= 0)
+    
 );
 
 CREATE TABLE transfer_log (
+
     log_id INT PRIMARY KEY AUTO_INCREMENT,
+    
     from_account INT,
+    
     to_account INT,
+    
     amount DECIMAL(15,2),
+    
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    
 );
 
 INSERT INTO accounts VALUES (101, 'Alice', 1000.00), (102, 'Bob', 500.00);
 
 ### 2. Configure Credentials
 private static final String URL = "jdbc:mysql://localhost:3306/swift_bank";
+
 private static final String USER = "YOUR_MYSQL_USERNAME";
+
 private static final String PASS = "YOUR_MYSQL_PASSWORD";
 
 ### 3. Compile and Run via Terminal
 Place your downloaded MySQL connector .jar file directly into the same workspace directory as your Java file and execute:
+
 Compile:
+
 javac -cp ".;mysql-connector-j-9.7.0.jar" BankSimulation.java
+
 Run:
+
 java -cp ".;mysql-connector-j-9.7.0.jar" BankSimulation
